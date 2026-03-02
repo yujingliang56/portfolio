@@ -17,13 +17,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci
-      - run: npm run build
-      - uses: actions/upload-pages-artifact@v3
+          # 缓存 npm 依赖，加速后续构建
+          cache: 'npm'
+
+      - name: Install dependencies (兼容模式)
+        # 用 npm install 替代 npm ci，解决依赖版本缺失问题
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
