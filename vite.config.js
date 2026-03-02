@@ -11,11 +11,7 @@ export default defineConfig({
   base,
   build: {
     rollupOptions: {
-      input: {
-        index: resolve(__dirname, 'index.html'),
-        polaroid: resolve(__dirname, 'polaroid-topics.html'),
-        lucky: resolve(__dirname, 'lucky-cookie.html'),
-      }
+      input: resolve(__dirname, 'polaroid-topics.html')
     }
   }
 })
